@@ -1,9 +1,7 @@
 import openai
 
-# Paste your OpenAI API key here
-openai.api_key = "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"
+client = openai.OpenAI(api_key="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")  # Replace with your new key or use environment variable
 
-# Read your reference file
 with open("marina_reference.md", "r", encoding="utf-8") as f:
     reference = f.read()
 
@@ -22,8 +20,8 @@ Reference:
 Question: {user_question}
 Answer:"""
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # Or "gpt-4" if you have access
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You answer as a marina expert using the provided reference guide."},
             {"role": "user", "content": prompt}
@@ -32,4 +30,4 @@ Answer:"""
         temperature=0.2,
     )
 
-    print(response['choices'][0]['message']['content'].strip())
+    print(response.choices[0].message.content.strip())
